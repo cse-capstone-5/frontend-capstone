@@ -7,7 +7,7 @@ import Main from "./pages/main";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Main />
+        <App/>
     </React.StrictMode>,
     document.getElementById('root')
 );
