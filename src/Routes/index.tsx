@@ -8,12 +8,14 @@ import SearchPage from "../pages/seachPage";
 
 const Routes = () => (
 	<RouteSwitch>
-		<Route path={'/'} exact>
-			<Main/>
-		</Route>
-		<Route path={'/search/:keyword'} exact>
-			<SearchPage/>
-		</Route>
+		<MainContext.Provider value={useMain()}>
+			<Route path={'/'} exact>
+				<Main/>
+			</Route>
+			<Route path={'/search/:keyword'} exact>
+				<SearchPage/>
+			</Route>
+		</MainContext.Provider>
 	</RouteSwitch>
 );
 
