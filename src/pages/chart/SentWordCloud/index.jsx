@@ -18,16 +18,20 @@ const SentWordCloud = (props) => {
 
   const options = {
     fontSizes: [10, 80],
-    padding: 2
+    padding: 2,
+    enableTooltip: false
   }
 
   return (
-      <Box>
-        <h2 align={'center'}>{keyword} Word Cloud</h2>
-        {isLoading ? <CircularProgress/> : (
-          <ReactWordcloud words={wordCloudData} size={[450, 450]} options={options}/>
-        )}
-      </Box>
+    <Grid
+      container
+    >
+      <Grid
+        item>
+        <h2 align={'center'}>"{keyword}"의 키워드 요약</h2>
+        <ReactWordcloud words={wordCloudData} size={[400, 400]} options={options}/>
+      </Grid>
+    </Grid>
   )
 }
 

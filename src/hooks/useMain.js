@@ -2,64 +2,63 @@ import {useState} from "react";
 import {getAllData} from "../api/apis";
 
 export const useMain = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [wordCloudData, setWordCloudData] = useState([])
-    const [lineChartData, setLineChartData] = useState({})
-    const [articleData, setArticleData] = useState({})
+  const [isLoading, setIsLoading] = useState(true);
+  const [wordCloudData, setWordCloudData] = useState([])
+  const [lineChartData, setLineChartData] = useState({})
+  const [articleData, setArticleData] = useState({})
 
-    const fetchData = (keyword) => {
-        setIsLoading(true);
+  const fetchData = (keyword) => {
+    setIsLoading(true);
 
-        getAllData(keyword).then(res => {
-            const data = res.data;
-            let idx = 1;
-            const resWordCloudData = Object.keys(data.wordCloud).filter(key => key !== keyword).map(key => {
-                const value = data.wordCloud[key];
+    getAllData(keyword).then(res => {
+      const data = res.data;
+      let idx = 1;
+      const resWordCloudData = Object.keys(data.wordCloud).filter(key => key !== keyword).map(key => {
+        const value = data.wordCloud[key];
 
-                return {
-                    text: key,
-                    value: value
-                }
-            })
+        return {
+          text: key,
+          value: value
+        }
+      })
 
-            const resLineChartData = data.lineChart.map(value => {
-                const name = value.name.slice(0, 10);
-                const count = Math.round(value.count * 100) / 100;
+      const resLineChartData = data.lineChart.map(value => {
+        const dateValues = value.name.slice(0, 10).split("-")
+        const date = dateValues[0] + '년' + dateValues[1] + '월' + dateValues[2] + '일';
+        const count = Math.round(value.count * 100) / 100;
 
-                return {
-                    date: value.name,
-                    "count": count
-                }
-            })
+        return {
+          date,
+          count
+        }
+      })
 
-            const resArticleData = data.article.map(value => {
-                const title = value[0];
-                const link = value[1];
+      const resArticleData = data.article.map(value => {
+        const title = value[0];
+        const link = value[1];
 
+        return {
+          idx: idx++,
+          title: title,
+          link: link
+        }
+      })
 
-                return {
-                    idx: idx++,
-                    title: title,
-                    link: link
-                }
-            })
-
-
-            setWordCloudData(resWordCloudData);
-            setLineChartData(resLineChartData);
-            setArticleData(resArticleData);
-            setIsLoading(false);
-        });
-    }
-
-    const handleIsLoading = value => setIsLoading(value);
-
-    return ({
-        isLoading,
-        wordCloudData,
-        lineChartData,
-        articleData,
-        handleIsLoading,
-        fetchData,
+      setWordCloudData(resWordCloudData);
+      setLineChartData(resLineChartData);
+      setArticleData(resArticleData);
+      setIsLoading(false);
     });
+  }
+
+  const handleIsLoading = value => setIsLoading(value);
+
+  return ({
+    isLoading,
+    wordCloudData,
+    lineChartData,
+    articleData,
+    handleIsLoading,
+    fetchData,
+  });
 }

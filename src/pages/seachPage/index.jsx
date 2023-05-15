@@ -2,10 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import SentLineChart from "../chart/SentLintChart";
 import SentWordCloud from "../chart/SentWordCloud";
-import {Box, Card, CardContent, Grid} from "@material-ui/core";
+import {Box, Card, CardContent, Grid, Paper} from "@material-ui/core";
 import ArticleComponent from "../articleComponent";
-import {getAllData} from "../../api/apis";
 import MainContext from "../../context/MainContext";
+import {useStyles} from "./styles";
+import Outline from "./Outline";
+import Visualization from "./Visualization";
+import Title from "./Title";
 
 const SearchPage = () => {
   const {
@@ -14,7 +17,7 @@ const SearchPage = () => {
     handleIsLoading
   } = useContext(MainContext);
   const {keyword} = useParams();
-
+  const classes = useStyles();
 
   useEffect(() => {
     fetchData(keyword);
@@ -23,29 +26,28 @@ const SearchPage = () => {
   return (
     <div>
       <Box>
-        <Grid item xs={12}>
-          <Card variant={'outlined'}>
-            <Box>
-              <Box pr={2}>
-                <Grid
-                  container
-                  justifyContent={'center'}
-                  alignItems={'center'}
-                  spacing={1}
-                >
-                  <Grid item>
-                    <SentWordCloud keyword={keyword}/>
-                  </Grid>
-                  <Grid item>
-                    <SentLineChart keyword={keyword} lixValue={'name'} yValue={'count'}/>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
-          </Card>
+        <Grid
+          spacing={3}
+          alignItems={'center'}
+          justifyContent={'center'}
+          container
+        >
+          <Outline
+            style={{
+              marginTop: 20,
+              backgroundColor: 'gray'
+          }}
+          >
+            <Title keyword={keyword}/>
+          </Outline>
+          <Outline>
+            <Visualization keyword={keyword}/>
+          </Outline>
+          <Outline>
+            <ArticleComponent keyword={keyword}/>
+          </Outline>
         </Grid>
       </Box>
-      {/*<ArticleComponent keyword={keyword}/>*/}
     </div>
   );
 }

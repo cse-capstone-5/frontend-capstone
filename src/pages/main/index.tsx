@@ -3,9 +3,6 @@ import {Box, Button, Grid, TextField, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 const Main = () => {
-	const handleClick = () => {
-		console.log(1);
-	};
 	const [searchKeyword, setSearchKeyWord] = useState("");
 
 	const [title, setTitle] = useState("|")
