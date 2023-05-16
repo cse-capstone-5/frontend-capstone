@@ -25,10 +25,11 @@ const SentWordCloud = (props) => {
   return (
     <Grid
       container
+      justifyContent={'center'}
     >
       <Grid
         item>
-        <h2 align={'center'}>"{keyword}"의 키워드 요약</h2>
+        <h3 align={'center'}>"{keyword}"의 키워드 요약</h3>
         <ReactWordcloud words={wordCloudData} size={[400, 400]} options={options}/>
       </Grid>
     </Grid>

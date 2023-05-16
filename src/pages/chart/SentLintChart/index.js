@@ -25,11 +25,12 @@ const SentLineChart = (props) => {
   return (
     <Grid
       container
+      justifyContent={'center'}
     >
       <Grid
         item
       >
-        <h2 align={'center'}>"{keyword}"의 평가 추세</h2>
+        <h3 align={'center'}>"{keyword}"의 평가 추세</h3>
         <LineChart width={width} height={height} data={lineChartData}>
           <XAxis dataKey={xValue} stroke={"#8884d8"}/>
           <YAxis domain={[-1 * (getAbsMax() + 0.1), getAbsMax() + 0.1]}/>

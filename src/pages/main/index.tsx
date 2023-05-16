@@ -1,8 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Box, Button, Grid, TextField, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import DayPicker from "../component/DayPicker";
+import MainContext from "../../context/MainContext";
 
 const Main = () => {
+	const {
+		handleStartDate,
+		handleEndDate
+	} = useContext(MainContext);
 	const [searchKeyword, setSearchKeyWord] = useState("");
 
 	const [title, setTitle] = useState("|")
@@ -31,9 +37,22 @@ const Main = () => {
 		} else {
 			setSubTitle(fullSubTitle)
 		}
+
+		handleStartDate(new Date());
+		handleEndDate(new Date());
 	}, [titleIndex, subTitleIndex])
 
-	const marginStyle = {marginTop: "100px"}
+	const handleChange = (value: Date[]) => {
+		if (value) {
+			handleStartDate(value[0]);
+			handleEndDate(value[1]);
+		} else {
+			handleStartDate(new Date());
+			handleEndDate(new Date());
+		}
+	}
+
+	const marginStyle = {marginTop: "80px"}
 
 	return (
 		<div>
@@ -58,6 +77,9 @@ const Main = () => {
 						fullWidth
 						onChange={e => setSearchKeyWord(e.target.value)}
 					/>
+				</Grid>
+				<Grid item style={marginStyle}>
+					<DayPicker onChange={handleChange}/>
 				</Grid>
 				<Grid item style={marginStyle}>
 					<Button

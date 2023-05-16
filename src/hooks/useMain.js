@@ -3,9 +3,11 @@ import {getAllData} from "../api/apis";
 
 export const useMain = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [wordCloudData, setWordCloudData] = useState([])
-  const [lineChartData, setLineChartData] = useState({})
-  const [articleData, setArticleData] = useState({})
+  const [wordCloudData, setWordCloudData] = useState([]);
+  const [lineChartData, setLineChartData] = useState({});
+  const [articleData, setArticleData] = useState({});
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const fetchData = (keyword) => {
     setIsLoading(true);
@@ -36,11 +38,21 @@ export const useMain = () => {
       const resArticleData = data.article.map(value => {
         const title = value[0];
         const link = value[1];
+        let type = 'impact'
+
+        if (idx === 1) {
+          type = 'impact';
+        } else if (idx === 2) {
+          type = 'positive';
+        } else if (idx === 3) {
+          type = 'negative';
+        }
 
         return {
           idx: idx++,
           title: title,
-          link: link
+          link: link,
+          type: type
         }
       })
 
@@ -52,13 +64,19 @@ export const useMain = () => {
   }
 
   const handleIsLoading = value => setIsLoading(value);
+  const handleStartDate = value => setStartDate(value);
+  const handleEndDate = value => setEndDate(value);
 
   return ({
     isLoading,
     wordCloudData,
     lineChartData,
     articleData,
+    startDate,
+    endDate,
     handleIsLoading,
+    handleStartDate,
+    handleEndDate,
     fetchData,
   });
 }

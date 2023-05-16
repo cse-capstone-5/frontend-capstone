@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import SentLineChart from "../chart/SentLintChart";
-import SentWordCloud from "../chart/SentWordCloud";
 import {Box, Card, CardContent, Grid, Paper} from "@material-ui/core";
 import ArticleComponent from "../articleComponent";
 import MainContext from "../../context/MainContext";
@@ -14,41 +12,41 @@ const SearchPage = () => {
   const {
     isLoading,
     fetchData,
-    handleIsLoading
+    handleIsLoading,
+    startDate,
+    endDate
   } = useContext(MainContext);
   const {keyword} = useParams();
   const classes = useStyles();
 
   useEffect(() => {
     fetchData(keyword);
-  }, [keyword]);
+  }, [keyword, startDate, endDate]);
 
   return (
-    <div>
-      <Box>
-        <Grid
-          spacing={3}
-          alignItems={'center'}
-          justifyContent={'center'}
-          container
-        >
-          <Outline
-            style={{
-              marginTop: 20,
-              backgroundColor: 'gray'
+    <Box>
+      <Grid
+        spacing={3}
+        alignItems={'center'}
+        justifyContent={'center'}
+        container
+      >
+        <Outline
+          style={{
+            marginTop: 20,
+            backgroundColor: 'gray'
           }}
-          >
-            <Title keyword={keyword}/>
-          </Outline>
-          <Outline>
-            <Visualization keyword={keyword}/>
-          </Outline>
-          <Outline>
-            <ArticleComponent keyword={keyword}/>
-          </Outline>
-        </Grid>
-      </Box>
-    </div>
+        >
+          <Title keyword={keyword}/>
+        </Outline>
+        <Outline>
+          <Visualization keyword={keyword}/>
+        </Outline>
+        <Outline>
+          <ArticleComponent keyword={keyword}/>
+        </Outline>
+      </Grid>
+    </Box>
   );
 }
 
