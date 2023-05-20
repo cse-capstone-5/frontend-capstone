@@ -1,4 +1,4 @@
-export const DOMAIN = 'http://sentimeter-backend.run.goorm.site'
+export const DOMAIN = 'https://sentimeter-backend.run.goorm.site'
 
 export const createRequestUrl = (suffix) => `${DOMAIN}/${suffix}`
 
