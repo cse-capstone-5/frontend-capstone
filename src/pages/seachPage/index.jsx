@@ -14,13 +14,15 @@ const SearchPage = () => {
     fetchData,
     handleIsLoading,
     startDate,
-    endDate
+    endDate,
+    handleStartDate,
+    handleEndDate
   } = useContext(MainContext);
-  const {keyword} = useParams();
+  const {keyword, start, end} = useParams();
   const classes = useStyles();
 
   useEffect(() => {
-    fetchData(keyword);
+    fetchData(keyword, start, end);
   }, [keyword, startDate, endDate]);
 
   return (

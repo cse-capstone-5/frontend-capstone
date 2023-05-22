@@ -14,13 +14,8 @@ const DayPicker = ({onChange}) => {
 
   const Ranges = [
     {
-      label: '오늘',
+      label: '1 전',
       value: [startOfDay(new Date()), endOfDay(new Date())],
-      placement: 'left'
-    },
-    {
-      label: '어제',
-      value: [startOfDay(addDays(new Date(), -1)), endOfDay(addDays(new Date(), -1))],
       placement: 'left'
     },
     {

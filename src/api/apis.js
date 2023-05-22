@@ -12,4 +12,4 @@ export const getWordCloudByKeyword = keyword => axios.get(`${WORDCLOUD}/keyword/
 
 export const getNewsByKeyword = keyword => axios.get(`${NEWS}/keyword/${keyword}`);
 
-export const getAllData = keyword => axios.get(`${ALL}/${keyword}`);
+export const getAllData = (keyword, start, end, limit) => axios.get(`${ALL}/${keyword}/ds/${start}/de/${end}/limit/${limit}`);

@@ -12,7 +12,7 @@ const Routes = () => (
 			<Route path={'/'} exact>
 				<Main/>
 			</Route>
-			<Route path={'/search/:keyword'} exact>
+			<Route path={'/search/:keyword/start/:start/end/:end'} exact>
 				<SearchPage/>
 			</Route>
 		</MainContext.Provider>

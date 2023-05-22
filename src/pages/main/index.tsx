@@ -3,6 +3,8 @@ import {Box, Button, Grid, TextField, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import DayPicker from "../component/DayPicker";
 import MainContext from "../../context/MainContext";
+import {dateFormatter, today, yesterday} from "../../lib/common";
+import dayjs from "dayjs";
 
 const Main = () => {
 	const {
@@ -18,6 +20,9 @@ const Main = () => {
 	const [subTitle, setSubTitle] = useState("|")
 	const [fullSubTitle, setFullSubTitle] = useState("당신의 키워드 감성분석")
 	const [subTitleIndex, setSubTitleIndex] = useState(0)
+
+	const [start, setStart] = useState('');
+	const [end, setEnd] = useState('');
 
 	useEffect(() => {
 		if (titleIndex < fullTitle.length) {
@@ -38,8 +43,10 @@ const Main = () => {
 			setSubTitle(fullSubTitle)
 		}
 
-		handleStartDate(new Date());
-		handleEndDate(new Date());
+		handleStartDate(yesterday);
+		handleEndDate(today);
+		setStart(dateFormatter(yesterday, 'YYYYMMDD'))
+		setEnd(dateFormatter(today, 'YYYYMMDD'))
 	}, [titleIndex, subTitleIndex])
 
 	const handleChange = (value: Date[]) => {
@@ -47,8 +54,8 @@ const Main = () => {
 			handleStartDate(value[0]);
 			handleEndDate(value[1]);
 		} else {
-			handleStartDate(new Date());
-			handleEndDate(new Date());
+			handleStartDate(yesterday);
+			handleEndDate(today);
 		}
 	}
 
@@ -86,7 +93,7 @@ const Main = () => {
 						variant={'contained'}
 						color={'primary'}
 						component={Link}
-						to={`/search/${searchKeyword}`}
+						to={`/search/${searchKeyword}/start/${start}/end/${end}`}
 					>
 						<Typography variant={'h5'}>분석하기</Typography>
 					</Button>

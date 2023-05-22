@@ -1,18 +1,20 @@
 import {useState} from "react";
 import {getAllData} from "../api/apis";
+import {subDays} from "date-fns";
+import {today, yesterday} from "../lib/common";
 
 export const useMain = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [wordCloudData, setWordCloudData] = useState([]);
   const [lineChartData, setLineChartData] = useState({});
   const [articleData, setArticleData] = useState({});
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(yesterday);
+  const [endDate, setEndDate] = useState(today);
 
-  const fetchData = (keyword) => {
+  const fetchData = (keyword, start, end) => {
     setIsLoading(true);
 
-    getAllData(keyword).then(res => {
+    getAllData(keyword, start, end, 10).then(res => {
       const data = res.data;
       let idx = 1;
       const resWordCloudData = Object.keys(data.wordCloud).filter(key => key !== keyword).map(key => {
