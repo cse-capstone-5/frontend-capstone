@@ -4,17 +4,20 @@ import 'rsuite/dist/rsuite.css'
 import {addDays, endOfDay, startOfDay, subDays} from "date-fns";
 import MainContext from "../../../context/MainContext";
 
-const DayPicker = ({onChange}) => {
+const DayPicker = (props) => {
   const {
     startDate,
     endDate,
+    start,
+    end,
     handleStartDate,
     handleEndDate
   } = useContext(MainContext);
+  const {onChange, disabled} = props;
 
   const Ranges = [
     {
-      label: '1 전',
+      label: '1일 전',
       value: [startOfDay(new Date()), endOfDay(new Date())],
       placement: 'left'
     },
@@ -39,6 +42,7 @@ const DayPicker = ({onChange}) => {
         defaultCalendarValue={[new Date(), new Date()]}
         onChange={onChange}
         ranges={Ranges}
+        disabled={disabled}
         size={'lg'}
       />
     </React.Fragment>

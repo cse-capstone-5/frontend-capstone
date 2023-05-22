@@ -9,7 +9,11 @@ import dayjs from "dayjs";
 const Main = () => {
 	const {
 		handleStartDate,
-		handleEndDate
+		handleEndDate,
+		start,
+		end,
+		handleStart,
+		handleEnd
 	} = useContext(MainContext);
 	const [searchKeyword, setSearchKeyWord] = useState("");
 
@@ -20,9 +24,6 @@ const Main = () => {
 	const [subTitle, setSubTitle] = useState("|")
 	const [fullSubTitle, setFullSubTitle] = useState("당신의 키워드 감성분석")
 	const [subTitleIndex, setSubTitleIndex] = useState(0)
-
-	const [start, setStart] = useState('');
-	const [end, setEnd] = useState('');
 
 	useEffect(() => {
 		if (titleIndex < fullTitle.length) {
@@ -45,17 +46,21 @@ const Main = () => {
 
 		handleStartDate(yesterday);
 		handleEndDate(today);
-		setStart(dateFormatter(yesterday, 'YYYYMMDD'))
-		setEnd(dateFormatter(today, 'YYYYMMDD'))
+		handleStart(dateFormatter(yesterday, 'YYYYMMDD'));
+		handleEnd(dateFormatter(today, 'YYYYMMDD'));
 	}, [titleIndex, subTitleIndex])
 
 	const handleChange = (value: Date[]) => {
 		if (value) {
 			handleStartDate(value[0]);
 			handleEndDate(value[1]);
+			handleStart(dateFormatter(value[0], 'YYYYMMDD'));
+			handleEnd(dateFormatter(value[1], 'YYYYMMDD'));
 		} else {
 			handleStartDate(yesterday);
 			handleEndDate(today);
+			handleStart(dateFormatter(yesterday, 'YYYYMMDD'));
+			handleEnd(dateFormatter(today, 'YYYYMMDD'));
 		}
 	}
 

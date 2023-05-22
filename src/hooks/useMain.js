@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {getAllData} from "../api/apis";
 import {subDays} from "date-fns";
-import {today, yesterday} from "../lib/common";
+import {dateFormatter, today, yesterday} from "../lib/common";
 
 export const useMain = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +10,8 @@ export const useMain = () => {
   const [articleData, setArticleData] = useState({});
   const [startDate, setStartDate] = useState(yesterday);
   const [endDate, setEndDate] = useState(today);
+  const [start, setStart] = useState(dateFormatter(yesterday, 'YYYYMMDD'));
+  const [end, setEnd] = useState(dateFormatter(today, 'YYYYMMDD'));
 
   const fetchData = (keyword, start, end) => {
     setIsLoading(true);
@@ -29,11 +31,13 @@ export const useMain = () => {
       const resLineChartData = data.lineChart.map(value => {
         const dateValues = value.name.slice(0, 10).split("-")
         const date = dateValues[0] + '년' + dateValues[1] + '월' + dateValues[2] + '일';
-        const count = Math.round(value.count * 100) / 100;
+        const sentVal = Math.round(value.sent_val * 100) / 100;
 
         return {
           date,
-          count
+          '감성 지수': sentVal,
+          '긍정 지수' : value.pos_count,
+          '부정 지수' : value.neg_count
         }
       })
 
@@ -68,6 +72,8 @@ export const useMain = () => {
   const handleIsLoading = value => setIsLoading(value);
   const handleStartDate = value => setStartDate(value);
   const handleEndDate = value => setEndDate(value);
+  const handleStart = value =>  setStart(value);
+  const handleEnd = value => setEnd(value);
 
   return ({
     isLoading,
@@ -76,9 +82,13 @@ export const useMain = () => {
     articleData,
     startDate,
     endDate,
+    start,
+    end,
     handleIsLoading,
     handleStartDate,
     handleEndDate,
+    handleStart,
+    handleEnd,
     fetchData,
   });
 }

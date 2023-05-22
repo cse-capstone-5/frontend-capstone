@@ -12,7 +12,7 @@ const SentLineChart = (props) => {
     keyword,
     grid,
     xValue,
-    yValue,
+    yValues,
     width = 800,
     height = 400.
   } = props
@@ -35,7 +35,9 @@ const SentLineChart = (props) => {
           <XAxis dataKey={xValue} stroke={"#8884d8"}/>
           <YAxis domain={[-1 * (getAbsMax() + 0.1), getAbsMax() + 0.1]}/>
           {grid && <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>}
-          <Line type="monotone" dataKey={yValue} stroke={"#8884d8"}/>
+          {
+            Object.keys(yValues).map(yValue => <Line type="monotone" dataKey={yValue} stroke={yValues[yValue]}/>)
+          }
           <ReferenceLine y={0} label={'기준점'} stroke={'red'} strokeDasharray="3 3"/>
           <Tooltip/>
         </LineChart>

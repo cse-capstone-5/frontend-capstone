@@ -2,13 +2,16 @@ import React, {useContext} from "react";
 import {Card, CardContent, Grid, Paper} from "@material-ui/core";
 import DayPicker from "../component/DayPicker";
 import MainContext from "../../context/MainContext";
+import {dateFormatter, today, yesterday} from "../../lib/common";
 
 const Title = (props) => {
   const {
     startDate,
     endDate,
     handleStartDate,
-    handleEndDate
+    handleEndDate,
+    handleStart,
+    handleEnd
   } = useContext(MainContext);
   const {keyword} = props;
 
@@ -16,9 +19,13 @@ const Title = (props) => {
     if (value) {
       handleStartDate(value[0]);
       handleEndDate(value[1]);
+      handleStart(dateFormatter(value[0], 'YYYYMMDD'));
+      handleEnd(dateFormatter(value[1], 'YYYYMMDD'));
     } else {
-      handleStartDate(new Date());
-      handleEndDate(new Date());
+      handleStartDate(yesterday);
+      handleEndDate(today);
+      handleStart(dateFormatter(yesterday, 'YYYYMMDD'));
+      handleEnd(dateFormatter(today, 'YYYYMMDD'));
     }
   }
 
@@ -45,7 +52,7 @@ const Title = (props) => {
       </Grid>
       <Grid container style={{marginTop: 20}}>
         <Grid item>
-          <DayPicker onChange={handleChange}/>
+          <DayPicker onChange={handleChange} disabled={true}/>
         </Grid>
       </Grid>
     </Grid>
